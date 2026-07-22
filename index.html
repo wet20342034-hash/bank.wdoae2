@@ -39,7 +39,7 @@
     /* ================== PRINT STYLES ================== */
     @media print {
         @page { size: A4 portrait; margin: 12mm 15mm; } 
-        @page landscape_page { size: A4 landscape; margin: 10mm 12mm; }
+        @page landscape_page { size: A4 landscape; margin: 10mm 12mm; } 
         
         body { background: white; margin: 0; padding: 0; color: black; font-family: 'Sarabun', serif; font-size: 11pt; line-height: 1.35; -webkit-print-color-adjust: exact; print-color-adjust: exact; min-width: auto !important; }
         
@@ -128,12 +128,12 @@
                                         <label class="form-label fw-bold">ระดับตำแหน่ง / สิทธิในการเบิก <span class="text-danger">*</span></label>
                                         <select class="form-select fw-bold text-success" id="traveler_level">
                                             <option value="general" selected>ระดับทั่วไป / ชำนาญการพิเศษลงมา (เบี้ยเลี้ยง 240 / ที่พัก 800)</option>
-                                            <option value="senior">ระดับสูง / เชี่ยวชาญ (เบี้ยเลี้ยง 270 / ที่พัก 1,200)</option>
+                                            <option value="senior">อำนวยการต้น / อำนวยการสูง / เชี่ยวชาญ (เบี้ยเลี้ยง 270 / ที่พัก 1,200)</option>
                                         </select>
                                     </div>
                                     
                                     <div class="col-12">
-                                        <label class="form-label fw-bold">ตามคำสั่ง/บันทึก ที่ (สำหรับพิมพ์เอกสาร)</label>
+                                        <label class="form-label fw-bold">ตามคำสั่ง/บันทึก ที่ <span class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="doc_order_no" placeholder="เลขที่คำสั่ง...">
                                             <span class="input-group-text">ลงวันที่</span>
@@ -158,24 +158,28 @@
                                     
                                     <div class="col-12">
                                         <label class="form-label fw-bold">วัตถุประสงค์การเดินทางไปราชการ <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="trip_purpose" placeholder="เช่น เข้าร่วมประชุม/สัมมนา..." required>
+                                        <input type="text" class="form-control" id="trip_purpose" placeholder="เช่น เข้าร่วมประชุม..." required>
                                     </div>
-                                    <div class="col-12">
-                                        <label class="form-label fw-bold">สถานที่เดินทางไป <span class="text-danger">*</span></label>
+                                    
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">เดินทางจาก <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="trip_from" placeholder="เช่น บ้านพัก / สำนักงาน..." value="สำนักงานส่งเสริมและพัฒนาการเกษตรที่ 2 จังหวัดราชบุรี" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">สถานที่เดินทางไป (ถึง) <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="trip_location" placeholder="เช่น ตำบล อำเภอ จังหวัด..." required>
                                     </div>
                                     
-                                    <!-- เพิ่มหัวข้อ หมายเหตุ (ถ้ามี) -->
                                     <div class="col-12">
                                         <label class="form-label fw-bold">หมายเหตุ <span class="text-muted fw-normal">(ถ้ามี)</span></label>
-                                        <input type="text" class="form-control" id="trip_remark" placeholder="ระบุหมายเหตุเพิ่มเติม">
+                                        <input type="text" class="form-control" id="trip_remark" placeholder="ระบุหมายเหตุเพิ่มเติม (ถ้ามี)">
                                     </div>
 
                                     <div class="col-3">
                                         <label class="form-label fw-bold"><i class="fas fa-route text-info me-1"></i> ลักษณะการเดินทาง</label>
                                         <select class="form-select mb-2 fw-bold text-dark border-info border-opacity-25" id="trip_type">
-                                            <option value="overnight" selected>พักแรม (นับ 24 ชม. เป็น 1 วัน)</option>
-                                            <option value="daytrip">ไม่พักแรม / ไป-กลับ (นับเกิน 12 ชม. หรือ 6 ชม.)</option>
+                                            <option value="overnight">พักแรม (นับ 24 ชม. เป็น 1 วัน)</option>
+                                            <option value="daytrip" selected>ไม่พักแรม / ไป-กลับ (นับเกิน 12 ชม. หรือ 6 ชม.)</option>
                                         </select>
                                     </div>
                                     
@@ -231,7 +235,6 @@
                                             </tr>
                                         </thead>
                                         <tbody id="coTravelerBody">
-                                            <!-- Rows here -->
                                         </tbody>
                                     </table>
                                 </div>
@@ -250,6 +253,13 @@
                             </div>
                             <div class="card-body p-4 d-flex flex-column justify-content-between">
                                 <div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">ความประสงค์เบิกค่าเบี้ยเลี้ยง <span class="text-danger">*</span></label>
+                                        <select class="form-select fw-bold text-success border-success" id="per_diem_claim">
+                                            <option value="yes" selected>ประสงค์เบิกค่าเบี้ยเลี้ยง</option>
+                                            <option value="no">ไม่ประสงค์เบิกค่าเบี้ยเลี้ยง (0 บาท)</option>
+                                        </select>
+                                    </div>
                                     <div class="rate-highlight-card" style="border-left-color: #10b981;">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div>
@@ -294,6 +304,7 @@
                                 <div>
                                     <div class="mb-3">
                                         <label class="form-label fw-bold">เลือกประเภทการเบิกค่าที่พัก <span class="text-danger">*</span></label>
+                                        <!-- นำ disabled ออกแล้ว -->
                                         <select class="form-select fw-bold" id="accom_type">
                                             <option value="none">ไม่เบิกค่าเช่าที่พัก / พักฟรี หรือ ไป-กลับ</option>
                                             <option value="flat" selected>แบบเหมาจ่าย (อัตรา 800 / 1,200 บาท)</option>
@@ -304,6 +315,7 @@
                                     <div class="row g-3 mb-3">
                                         <div class="col-6">
                                             <label class="form-label fw-bold">จำนวนคืนที่พัก (คืน)</label>
+                                            <!-- นำ disabled ออกแล้ว -->
                                             <input type="number" step="1" min="0" class="form-control text-center fw-bold" id="accom_nights" value="0">
                                         </div>
                                         <div class="col-6" id="actual_rate_container" style="display: none;">
@@ -312,6 +324,7 @@
                                         </div>
                                     </div>
                                     <div class="form-check mb-3 p-3 bg-light rounded border">
+                                        <!-- นำ disabled ออกแล้ว -->
                                         <input class="form-check-input ms-1" type="checkbox" id="is_special_area">
                                         <label class="form-check-label fw-bold ms-2 text-dark" for="is_special_area">เดินทางไปในท้องที่พิเศษ</label>
                                     </div>
@@ -332,24 +345,29 @@
                             </div>
                             <div class="card-body p-4">
                                 <div class="mb-3 gap-2 no-print">
-                                    <button type="button" class="btn btn-outline-primary btn-sm rounded-pill btn-add-transport" data-type="car">🚗 รถยนต์ (4 บ./กม.)</button>
-                                    <button type="button" class="btn btn-outline-info btn-sm rounded-pill btn-add-transport" data-type="motorcycle">🏍️ มอเตอร์ไซค์ (2 บ./กม.)</button>
-                                    <button type="button" class="btn btn-outline-success btn-sm rounded-pill btn-add-transport" data-type="gov_car">🚙 รถยนต์ราชการ</button>
-                                    <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill btn-add-transport" data-type="other">📄 เพิ่มรายการอื่นๆ</button>
+                                    <button type="button" class="btn btn-outline-primary btn-sm rounded-pill btn-add-transport mb-1" data-type="car">🚗 รถยนต์ (4 บ./กม.)</button>
+                                    <button type="button" class="btn btn-outline-info btn-sm rounded-pill btn-add-transport mb-1" data-type="motorcycle">🏍️ มอเตอร์ไซค์ (2 บ./กม.)</button>
+                                    <button type="button" class="btn btn-outline-success btn-sm rounded-pill btn-add-transport mb-1" data-type="gov_car">🚙 รถยนต์ราชการ</button>
+                                    <button type="button" class="btn btn-outline-success btn-sm rounded-pill btn-add-transport mb-1" data-type="bus">🚌 รถประจำทาง</button>
+                                    <button type="button" class="btn btn-outline-dark btn-sm rounded-pill btn-add-transport mb-1" data-type="train">🚆 รถไฟ</button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm rounded-pill btn-add-transport mb-1" data-type="plane">✈️ เครื่องบิน</button>
+                                    <button type="button" class="btn btn-outline-warning text-dark btn-sm rounded-pill btn-add-transport mb-1" data-type="taxi">🚕 แท็กซี่</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill btn-add-transport mb-1" data-type="moto_taxi">🛵 วินมอเตอร์ไซค์</button>
+                                    <button type="button" class="btn btn-outline-success btn-sm rounded-pill btn-add-transport mb-1" data-type="expressway">🛣️ ค่าทางด่วน</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill btn-add-transport mb-1" data-type="other">📄 อื่นๆ</button>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-bordered align-middle table-dynamic" id="transportTable">
                                         <thead>
                                             <tr class="text-center">
-                                                <th style="width: 25%;">ประเภทพาหนะ</th>
-                                                <th style="width: 35%;">รายละเอียดเส้นทาง</th>
-                                                <th style="width: 18%;">ระยะทาง (กม.) / จำนวน</th>
+                                                <th style="width: 35%;">ประเภทพาหนะ</th>
+                                                <th style="width: 25%;">ทะเบียน</th>
+                                                <th style="width: 15%;">ระยะทาง (กม.) / จำนวน</th>
                                                 <th style="width: 15%;">จำนวนเงิน (บาท)</th>
-                                                <th style="width: 7%;" class="no-print">ลบ</th>
+                                                <th style="width: 10%;" class="no-print">ลบ</th>
                                             </tr>
                                         </thead>
                                         <tbody id="transportBody">
-                                            <!-- Rows here -->
                                         </tbody>
                                         <tfoot>
                                             <tr class="table-light fw-bold">
@@ -428,7 +446,6 @@
 
             <div class="f-row" style="margin-bottom: 5px;">เรื่อง &nbsp;&nbsp;&nbsp;ขออนุมัติเบิกค่าใช้จ่ายในการเดินทางไปราชการ</div>
             
-            <!-- นำจุดไข่ปลาออกด้วยการกำหนด border-color: transparent -->
             <div class="f-row" style="margin-bottom: 10px;">เรียน &nbsp;<span class="val-left" style="flex: 1; border-color: transparent;" id="pr_commander"></span></div>
 
             <div class="indent f-row" style="margin-bottom: 5px; flex-wrap: nowrap; white-space: nowrap;">
@@ -482,8 +499,7 @@
                 </div>
                 <div class="f-row">
                     รวมเวลาไปราชการครั้งนี้ <span class="val text-center" id="pr_t_d" style="width: 60px; margin: 0 10px;"></span> วัน 
-                    <span class="val text-center" id="pr_t_h" style="width: 60px; margin: 0 10px;"></span> ชั่วโมง
-                    <span class="val text-center" id="pr_t_m" style="width: 60px; margin: 0 10px;"></span> นาที
+                    <span class="val text-center" id="pr_t_h" style="width: 60px; margin: 0 10px;"></span> ชั่วโมง 
                 </div>
             </div>
 
@@ -505,12 +521,12 @@
                     <span style="margin-left: 20px;">รวม</span> <span class="val text-end" id="pr_acc_tot" style="width:100px; margin: 0 10px;"></span> บาท
                 </div>
                 <div class="f-row">
-                    ค่าพาหนะ <span class="val text-center" id="pr_trp_type" style="flex:1; margin: 0 10px; border-color: transparent;"></span> 
-                    <span style="margin-left: 110px;">รวม</span> <span class="val text-end" id="pr_trp_tot" style="width:100px; margin: 0 10px;"></span> บาท
+                    ค่าพาหนะ <span class="val text-center" id="pr_trp_type" style="flex:1; border-bottom: 1px dotted black; margin: 0 10px;"></span> 
+                    <span style="margin-left: 11px;">รวม</span> <span class="val text-end" id="pr_trp_tot" style="width:100px; margin: 0 10px;"></span> บาท
                 </div>
                 <div class="f-row">
-                    ค่าใช้จ่ายอื่น <span style="flex:1; border-bottom: 1px dotted black; margin: 0 10px;"></span> 
-                    <span style="margin-left: 110px;">รวม</span> <span class="val text-end" id="pr_oth_tot" style="width:100px; margin: 0 10px;"></span> บาท
+                    ค่าใช้จ่ายอื่น <span class="val-left text-center" id="pr_oth_desc" style="flex:1; border-bottom: 1px dotted black; margin: 0 10px; min-height: 16px;"></span> 
+                    <span style="margin-left: 10px;">รวม</span> <span class="val text-end" id="pr_oth_tot" style="width:100px; margin: 0 10px;"></span> บาท
                 </div>
                 <div class="f-row" style="margin-top: 5px;">
                     <span style="flex:1;"></span>
@@ -555,7 +571,6 @@
             
             <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
                 <div style="width: 45%; padding-left: 20px;">
-                    <!-- ปรับข้อความ 2 บรรทัด และจัดฟอร์มลงชื่อเป็น 45% ซ้ายขวาเท่าเดิม -->
                     <div style="margin-bottom: 25px; line-height: 1.5; white-space: nowrap;">ได้ตรวจสอบหลักฐานการเบิกจ่ายเงินที่แนบ<br>ถูกต้องแล้ว เห็นควรอนุมัติให้เบิกจ่ายได้</div>
                     
                     <div class="f-row" style="margin-bottom: 15px;">
@@ -573,7 +588,6 @@
                 </div>
                 
                 <div style="width: 45%;">
-                    <!-- ปรับระยะขอบชดเชยให้บรรทัดเซ็นชื่อตรงกัน -->
                     <div class="text-center" style="margin-bottom: 45px;">อนุมัติให้จ่ายได้</div>
                     
                     <div class="f-row" style="margin-bottom: 15px;">
@@ -648,7 +662,7 @@
                     <div style="flex: 1;">
                         1. กรณีเดินทางเป็นหมู่คณะและจัดทำใบเบิกค่าใช้จ่ายรวมฉบับเดียวกัน หากระยะเวลาในการเริ่มต้นและสิ้นสุดการเดินทางของแต่ละบุคคลแตกต่างกัน ให้แสดงรายละเอียดของวันเวลาที่แตกต่างกันของบุคคลนั้นในช่องหมายเหตุ<br>
                         2. กรณียื่นขอเบิกค่าใช้จ่ายรายบุคคล ให้ผู้ขอรับเงินเป็นผู้ลงลายมือชื่อผู้รับเงินและวันเดือนปีที่รับเงิน กรณีที่มีการยืมเงิน ให้ระบุวันที่ที่ได้รับเงินยืม เลขที่สัญญายืมและวันที่อนุมัติยืมด้วย<br>
-                        3. กรณีที่ยื่นขอเบิกค่าใช้จ่ายรวมเป็นหมู่คณะ ผู้ขอรับเงินมิต้องลงลายมือชื่อในช่องผู้รับเงิน ทั้งนี้ ให้ผู้มีสิทธิแต่ละคนลงลายมือชื่อให้ครบ
+                        3. ผู้จ่ายเงินหมายถึงผู้ที่ขอยืมเงินจากทางราชการ และจ่ายเงินยืมนั้นให้แก่ผู้เดินทางแต่ละคน เป็นผู้ลงลายมือชื่อผู้จ่ายเงิน
                     </div>
                 </div>
             </div>
@@ -739,6 +753,82 @@
             </div>
         </div>
 
+        <!-- ================== หน้าที่ 4 (บก.111) ================== -->
+        <div class="page-break" id="page4_container" style="padding-top: 10px; display: none;">
+            <div style="text-align: right; margin-bottom: 10px; font-size: 11pt;">แบบ บก.๑๑๑</div>
+            <div class="text-center fw-bold" style="font-size: 16pt; margin-bottom: 20px;">ใบรับรองแทนใบเสร็จรับเงิน</div>
+            
+            <div style="margin-bottom: 10px; line-height: 1.5;">
+                <div class="f-row">
+                    <span style="width: 100px;">ส่วนราชการ</span>
+                    <span class="val-left" id="pr4_office_1" style="flex: 1;"></span>
+                </div>
+            </div>
+            
+            <table class="t-table" style="margin-bottom: 15px;">
+                <thead>
+                    <tr>
+                        <th style="width: 15%;">วัน เดือน ปี</th>
+                        <th style="width: 55%;">รายละเอียดรายจ่าย</th>
+                        <th style="width: 15%;">จำนวนเงิน (บาท)</th>
+                        <th style="width: 15%;">หมายเหตุ</th>
+                    </tr>
+                </thead>
+                <tbody id="pr4_tbody">
+                    <!-- JS generated -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2" class="text-center fw-bold">รวมทั้งสิ้น <span id="pr4_baht_txt" style="color:#0000cd; margin-left:10px;"></span></td>
+                        <td class="text-end fw-bold" id="pr4_grd_tot" style="color:#0000cd;"></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <!-- ส่วนสรุปและการรับรอง -->
+            <div style="line-height: 1.5; margin-bottom: 20px;">
+                <div class="f-row" style="margin-bottom: 10px;">
+                    <span style="margin-left: 50px;">ข้าพเจ้า</span> <span class="val text-center" id="pr4_name_1" style="width: 250px;"></span>
+                    <span style="margin-left: 10px;">ตำแหน่ง</span> <span class="val-left" id="pr4_pos_1" style="flex: 1;"></span>
+                </div>
+                <div class="f-row" style="margin-bottom: 10px;">
+                    <span style="width: 50px;">สังกัด</span> <span class="val-left" id="pr4_office_2" style="flex: 1;"></span>
+                </div>
+                <div style="text-indent: 50px; text-align: justify;">
+                    ขอรับรองว่า รายจ่ายข้างต้นนี้ ไม่อาจเรียกใบเสร็จรับเงินจากผู้รับได้ และข้าพเจ้าได้จ่ายไปในงานของทางราชการโดยแท้
+                </div>
+            </div>
+
+            <!-- ลายเซ็น -->
+            <div style="display: flex; justify-content: flex-end; text-align: center; margin-bottom: 20px;">
+                <div style="width: 350px;">
+                    <div style="margin-bottom: 10px;">(ลงชื่อ)........................................................</div>
+                    <div style="margin-bottom: 10px;">(........................................................)</div>
+                    <div class="f-row" style="justify-content: center; white-space: nowrap;">
+                        วันที่.............เดือน................................พ.ศ................
+                    </div>
+                </div>
+            </div>
+
+            <!-- ส่วนหมายเหตุ ขอเบิกเพียง (Hidden by default) -->
+            <div id="pr4_remark_section" style="display: none; margin-top: 10px;">
+                <div class="fw-bold" style="text-decoration: underline; margin-bottom: 10px;">หมายเหตุ</div>
+                <div class="f-row" style="margin-bottom: 15px;">
+                    ขอเบิกเงินเพียง <span class="val text-center fw-bold" id="pr4_req_amt" style="width: 100px;"></span> บาท
+                    <span style="margin-left: 10px;">(<span class="val text-center fw-bold" id="pr4_req_baht_txt" style="min-width: 200px; border:none;"></span>)</span>
+                </div>
+                <div style="display: flex; justify-content: flex-end; text-align: center;">
+                    <div style="width: 350px;">
+                        <div style="margin-bottom: 10px;">(ลงชื่อ)........................................................</div>
+                        <div style="margin-bottom: 10px;">(........................................................)</div>
+                        <div class="f-row" style="justify-content: center; white-space: nowrap;">
+                            วันที่.............เดือน................................พ.ศ................
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Scripts -->
@@ -818,7 +908,7 @@
             <td>
                 <select class="form-select form-select-sm fw-bold text-primary ct-level">
                     <option value="general" selected>ระดับทั่วไป / ชำนาญการพิเศษลงมา</option>
-                    <option value="senior">ระดับสูง / เชี่ยวชาญ</option>
+                    <option value="senior">อำนวยการต้น / อำนวยการสูง / เชี่ยวชาญ</option>
                 </select>
             </td>
             <td class="text-center no-print">
@@ -842,23 +932,48 @@
         });
     }
 
-    function addTransportRow(type, desc, dist) {
-        let amtValue = (type === 'car') ? (dist * 4).toFixed(2) : 
-                       (type === 'motorcycle') ? (dist * 2).toFixed(2) : '0.00';
-                       
+    function addTransportRow(type, dist) {
+        let typeOptions = `
+            <option value="car" ${type === 'car' ? 'selected' : ''}>🚗 รถยนต์ส่วนบุคคล (4 บ./กม.)</option>
+            <option value="motorcycle" ${type === 'motorcycle' ? 'selected' : ''}>🏍️ รถจักรยานยนต์ (2 บ./กม.)</option>
+            <option value="gov_car" ${type === 'gov_car' ? 'selected' : ''}>🚙 รถยนต์ราชการ</option>
+            <option value="bus" ${type === 'bus' ? 'selected' : ''}>🚌 รถประจำทาง (ค่าเดินทางจ่ายจริง)</option>
+            <option value="train" ${type === 'train' ? 'selected' : ''}>🚆 รถไฟ (ค่าเดินทางจ่ายจริง)</option>
+            <option value="plane" ${type === 'plane' ? 'selected' : ''}>✈️ เครื่องบิน (ค่าเดินทางจ่ายจริง)</option>
+            <option value="taxi" ${type === 'taxi' ? 'selected' : ''}>🚕 รถรับจ้าง / แท็กซี่ (ค่าเดินทางจ่ายจริง)</option>
+            <option value="moto_taxi" ${type === 'moto_taxi' ? 'selected' : ''}>🛵 รถจักรยานยนต์ รับจ้าง (ค่าเดินทางจ่ายจริง)</option>
+            <option value="expressway" ${type === 'expressway' ? 'selected' : ''}>🛣️ ค่าทางด่วน (ค่าเดินทางจ่ายจริง)</option>
+            <option value="other" ${type === 'other' ? 'selected' : ''}>📄 อื่นๆ (ค่าเดินทางจ่ายจริง)</option>
+        `;
+        
+        let isCarMoto = (type === 'car' || type === 'motorcycle');
+        let isGovCar = (type === 'gov_car');
+        let isOther = (type === 'other');
+        let isNoDist = (type === 'expressway' || type === 'other');
+        
+        let initialAmount = 0;
+        if (type === 'car') {
+            initialAmount = (dist !== '' && !isNaN(dist)) ? dist * 4 : 0;
+        } else if (type === 'motorcycle') {
+            initialAmount = (dist !== '' && !isNaN(dist)) ? dist * 2 : 0;
+        }
+
+        let distPlaceholder = (isCarMoto || isGovCar) ? 'กม.' : 'จำนวน';
+        let amtPlaceholder = isCarMoto ? '0.00' : 'ระบุเงินที่จ่ายจริง';
+        let amtValue = (initialAmount > 0 || isCarMoto) ? initialAmount.toFixed(2) : (isGovCar ? '0.00' : '');
+        let distDisplay = isNoDist ? 'none' : 'block';
+
         let rowHtml = `
             <tr>
                 <td>
-                    <select class="form-select form-select-sm transport-type fw-bold text-dark">
-                        <option value="car" ${type === 'car' ? 'selected' : ''}>🚗 รถยนต์ส่วนบุคคล</option>
-                        <option value="motorcycle" ${type === 'motorcycle' ? 'selected' : ''}>🏍️ รถจักรยานยนต์</option>
-                        <option value="gov_car" ${type === 'gov_car' ? 'selected' : ''}>🚙 รถยนต์ราชการ</option>
-                        <option value="other" ${type === 'other' ? 'selected' : ''}>📄 อื่นๆ / รถสาธารณะ</option>
+                    <select class="form-select form-select-sm transport-type fw-bold text-dark mb-1">
+                        ${typeOptions}
                     </select>
+                    <input type="text" class="form-control form-control-sm transport-other-desc mt-1" placeholder="ระบุรายละเอียดค่าใช้จ่ายอื่น" style="display: ${isOther ? 'block' : 'none'};">
                 </td>
-                <td><input type="text" class="form-control form-control-sm transport-desc" value="${desc}"></td>
-                <td><input type="number" step="1" min="0" class="form-control form-control-sm text-center transport-dist" value="${dist}"></td>
-                <td><input type="number" step="0.01" min="0" class="form-control form-control-sm text-end transport-amount fw-bold text-primary" value="${amtValue}"></td>
+                <td><input type="text" class="form-control form-control-sm transport-plate" placeholder="เช่น กข 1234" style="display: ${(isCarMoto || isGovCar) ? 'block' : 'none'};"></td>
+                <td><input type="number" step="0.1" min="0" class="form-control form-control-sm text-center transport-dist" value="${dist}" placeholder="${distPlaceholder}" style="display: ${distDisplay};"></td>
+                <td><input type="number" step="0.01" min="0" class="form-control form-control-sm text-end transport-amount fw-bold text-primary" value="${amtValue}" placeholder="${amtPlaceholder}"></td>
                 <td class="text-center no-print">
                     <button type="button" class="btn btn-outline-danger btn-sm btn-remove-transport"><i class="fas fa-trash-alt"></i></button>
                 </td>
@@ -910,6 +1025,7 @@
             }
         }
 
+        let perDiemClaim = $('#per_diem_claim').val();
         let deductMeals = parseInt($('#deduct_meals').val()) || 0;
         
         let accomType = $('#accom_type').val();
@@ -920,6 +1036,7 @@
         let transportTotal = 0;
         let otherTotal = 0;
         let trpTypes = [];
+        let othDescArr = [];
         
         $('#transportBody tr').each(function() {
             let type = $(this).find('.transport-type').val();
@@ -929,19 +1046,29 @@
             if (type === 'car') typeName = "รถยนต์ส่วนบุคคล";
             else if (type === 'motorcycle') typeName = "รถจักรยานยนต์";
             else if (type === 'gov_car') typeName = "รถยนต์ราชการ";
-            else if (type === 'other') typeName = "รับจ้าง/ประจำทาง";
+            else if (type === 'bus') typeName = "รถประจำทาง";
+            else if (type === 'train') typeName = "รถไฟ";
+            else if (type === 'plane') typeName = "เครื่องบิน";
+            else if (type === 'taxi') typeName = "รถรับจ้าง / แท็กซี่";
+            else if (type === 'moto_taxi') typeName = "รถจักรยานยนต์รับจ้าง";
+            else if (type === 'expressway') typeName = "ทางด่วน";
 
-            if (typeName && !trpTypes.includes(typeName)) {
-                trpTypes.push(typeName);
+            if (type !== 'other' && typeName !== "") {
+                if (!trpTypes.includes(typeName)) {
+                    trpTypes.push(typeName);
+                }
             }
             
             if (type === 'other') {
                 otherTotal += amt;
+                let desc = $(this).find('.transport-other-desc').val().trim();
+                if(desc) othDescArr.push(desc);
             } else {
                 transportTotal += amt;
             }
         });
         
+        let othDescStr = othDescArr.length > 0 ? othDescArr.join(', ') : '';
         let trpTypeStr = trpTypes.length > 0 ? trpTypes.join(', ') : '-';
         
         let travelers = [];
@@ -969,7 +1096,12 @@
             let rAlw = (t.level === 'senior') ? 270 : 240;
             let rAcc = (t.level === 'senior') ? 1200 : 800;
             
-            t.alw = Math.max(0, (calcDays * rAlw) - (deductMeals * (rAlw / 3)));
+            // เช็คความประสงค์ขอเบิกเบี้ยเลี้ยง
+            if (perDiemClaim === 'no') {
+                t.alw = 0;
+            } else {
+                t.alw = Math.max(0, (calcDays * rAlw) - (deductMeals * (rAlw / 3)));
+            }
             
             if (accomType === 'flat') {
                 t.acc = nights > 0 ? (nights * rAcc * multiplier) : 0; 
@@ -1006,7 +1138,7 @@
             hrs: finalHours,
             mins: finalMins,
             fullDays: finalDays,
-            totals: { alw: sumAlw, acc: sumAcc, trp: transportTotal, oth: otherTotal, grand: grandTotal, trpType: trpTypeStr }
+            totals: { alw: sumAlw, acc: sumAcc, trp: transportTotal, oth: otherTotal, grand: grandTotal, trpType: trpTypeStr, othDesc: othDescStr }
         };
     }
 
@@ -1075,26 +1207,29 @@
 
         $('#pr_alw_d').text(d.days); $('#pr_alw_tot').text(fmt(d.totals.alw));
         $('#pr_acc_d').text(d.nights); $('#pr_acc_tot').text(fmt(d.totals.acc));
+        
+        // คืนค่าเส้นประให้บรรทัดค่าพาหนะ
         $('#pr_trp_type').text(d.totals.trpType);
         $('#pr_trp_tot').text(fmt(d.totals.trp));
+        $('#pr_oth_desc').text(d.totals.othDesc || '');
         $('#pr_oth_tot').text(fmt(d.totals.oth));
-        $('#pr_grd_tot').text(fmt(d.totals.grand));
         
+        $('#pr_grd_tot').text(fmt(d.totals.grand));
         $('#pr_baht_txt').text(toThaiBahtText(d.totals.grand));
 
         // ================= หยอดข้อมูลลงหน้า 2 =================
         $('#pr2_amt').text(fmt(d.totals.grand));
         $('#pr2_baht').text(toThaiBahtText(d.totals.grand));
-        $('#pr2_remark').text($('#trip_remark').val()); // ดึงข้อมูลหมายเหตุ
+        $('#pr2_remark').text($('#trip_remark').val());
 
         // ================= หยอดข้อมูลลงหน้า 3 (ตาราง) =================
         if (d.travelers.length > 1) {
             $('#page3_container').removeClass('d-none').show();
             $('#pr3_office').text($('#traveler_school').val());
-            $('#pr3_province').text($('#traveler_province').val()); // ดึงข้อมูลจังหวัดที่กรอกมาใส่หน้า 3
+            $('#pr3_province').text($('#traveler_province').val()); 
             $('#pr3_main').text(main.name);
             
-            // ดึงข้อมูลวันที่จากหน้าที่ 1 มาใส่หน้า 3
+            // ดึงข้อมูลวันที่จากหน้าที่ 1 มาใส่หน้า 3 (ไม่มีการย่อเดือน)
             $('#pr3_doc_d').text(docDay);
             $('#pr3_doc_m').text(docMonth);
             $('#pr3_doc_y').text(docYear);
@@ -1128,7 +1263,112 @@
             $('#page3_container').addClass('d-none').hide();
         }
 
-        // ================= สั่งพิมพ์ (เบราว์เซอร์จะสลับโหมด @media print ให้เอง) =================
+        // ================= หยอดข้อมูลลงหน้า 4 (บก.111) =================
+        $('#pr4_office_1').text($('#traveler_school').val());
+        $('#pr4_office_2').text($('#traveler_school').val());
+        $('#pr4_name_1').text(main.name);
+        $('#pr4_pos_1').text(main.pos);
+        
+        let p4Html = '';
+        let p4TotalCalc = 0;
+        let p4TotalRequest = 0;
+        let showRemark = false;
+        
+        let p4Date = '';
+        if(sDate.d) {
+            p4Date = `${sDate.d} ${sDate.m} ${sDate.y}`; 
+            if ($('#trip_type').val() === 'overnight' && eDate.d) {
+                let eDateStr = `${eDate.d} ${eDate.m} ${eDate.y}`;
+                if(p4Date !== eDateStr) {
+                    p4Date += ` -<br>${eDateStr}`;
+                }
+            }
+        }
+
+        let tripFrom = $('#trip_from').val();
+        let tripLoc = $('#trip_location').val();
+
+        $('#transportBody tr').each(function() {
+            let type = $(this).find('.transport-type').val();
+            let plate = $(this).find('.transport-plate').val() || ''; 
+            plate = plate.trim();
+            let dist = parseFloat($(this).find('.transport-dist').val()) || 0;
+            let amt = parseFloat($(this).find('.transport-amount').val()) || 0;
+            let desc = $(this).find('.transport-other-desc').val() || ''; 
+
+            if (type !== 'gov_car') { // ไม่แสดงในหน้า 4 ถ้ารถยนต์ราชการ
+                let calc = amt; 
+                if (type === 'car') calc = dist * 4;
+                if (type === 'motorcycle') calc = dist * 2;
+
+                if ((type === 'car' || type === 'motorcycle') && Math.abs(amt - calc) > 0.01) {
+                    showRemark = true;
+                }
+
+                p4TotalCalc += calc;
+                p4TotalRequest += amt;
+
+                let typeName = "";
+                let prefix = (type === 'car' || type === 'motorcycle') ? "ค่าชดเชย" : "ค่า";
+                
+                if (type === 'car') typeName = "รถยนต์ส่วนบุคคล";
+                else if (type === 'motorcycle') typeName = "รถจักรยานยนต์";
+                else if (type === 'bus') typeName = "รถประจำทาง";
+                else if (type === 'train') typeName = "รถไฟ";
+                else if (type === 'plane') typeName = "เครื่องบิน";
+                else if (type === 'taxi') typeName = "รถรับจ้าง / แท็กซี่";
+                else if (type === 'moto_taxi') typeName = "รถจักรยานยนต์รับจ้าง";
+                else if (type === 'expressway') typeName = "ทางด่วน";
+                else if (type === 'other') {
+                    prefix = "ค่า";
+                    typeName = desc !== '' ? desc : "อื่นๆ";
+                }
+
+                let detailText = '';
+                
+                if (type === 'car' || type === 'motorcycle') {
+                    let rate = (type === 'car') ? 4 : 2;
+                    detailText += `${prefix} ${typeName} ทะเบียน ${plate !== '' ? plate : '-'}<br>`;
+                    detailText += `จาก ${tripFrom} ถึง ${tripLoc}<br>`;
+                    detailText += `เดินทางไป-กลับ รวมระยะทาง ${dist} กม. กิโลเมตรละ ${rate} บาท`;
+                } else if (type === 'expressway' || type === 'other') {
+                    // ทางด่วน และ อื่นๆ ไม่มีระยะทาง
+                    detailText += `${prefix} ${typeName}<br>`;
+                    detailText += `จาก ${tripFrom} ถึง ${tripLoc}`;
+                } else {
+                    detailText += `${prefix} ${typeName}<br>`;
+                    detailText += `จาก ${tripFrom} ถึง ${tripLoc}<br>`;
+                    detailText += `เดินทางไป-กลับ รวมระยะทาง ${dist} กม.`;
+                }
+
+                p4Html += `<tr>
+                    <td class="text-center align-top">${p4Date}</td>
+                    <td class="text-start ps-2 align-top">${detailText}</td>
+                    <td class="text-end pe-1 align-top">${fmt(amt)}</td>
+                    <td class="text-center align-top"></td>
+                </tr>`;
+            }
+        });
+
+        if (p4Html !== '') {
+            $('#page4_container').removeClass('d-none').show();
+            $('#pr4_tbody').html(p4Html);
+            
+            // ใช้ยอดรวมที่ขอเบิกจริง (amt) แสดงผล
+            $('#pr4_grd_tot').text(fmt(p4TotalRequest));
+            $('#pr4_baht_txt').text(`(${toThaiBahtText(p4TotalRequest)})`);
+
+            if (showRemark) {
+                $('#pr4_remark_section').show();
+                $('#pr4_req_amt').text(fmt(p4TotalRequest));
+                $('#pr4_req_baht_txt').text(toThaiBahtText(p4TotalRequest));
+            } else {
+                $('#pr4_remark_section').hide();
+            }
+        } else {
+            $('#page4_container').addClass('d-none').hide();
+        }
+
         window.print();
     }
 
@@ -1148,8 +1388,6 @@
         let mm = String(tmr.getMonth() + 1).padStart(2, '0'); 
         let yyyy = tmr.getFullYear();
         document.getElementById("end_date")._flatpickr.setDate(`${dd}/${mm}/${yyyy}`);
-
-        addTransportRow('car', 'เดินทางไป-กลับ โดยรถยนต์ส่วนบุคคล', 100);
         
         $(document).on('change', '#accom_type', function() {
             let val = $(this).val();
@@ -1166,11 +1404,8 @@
 
         $(document).on('click', '.btn-add-transport', function() {
             let type = $(this).data('type');
-            let desc = type === 'car' ? 'ค่าพาหนะรถยนต์ (ชดเชยน้ำมัน 4 บาท/กม.)' : 
-                       type === 'motorcycle' ? 'ค่าพาหนะรถจักรยานยนต์ (ชดเชยน้ำมัน 2 บาท/กม.)' : 
-                       type === 'gov_car' ? 'เดินทางโดยรถยนต์ราชการ ทะเบียน ' : 'ค่าพาหนะอื่นๆ';
-            let dist = (type === 'gov_car' || type === 'other') ? 0 : 50;
-            addTransportRow(type, desc, dist);
+            let dist = (type === 'car' || type === 'motorcycle') ? 50 : 1;
+            addTransportRow(type, dist);
         });
 
         $(document).on('click', '.btn-remove-transport', function() {
@@ -1178,14 +1413,45 @@
             calculateAll();
         });
 
-        $(document).on('input change', '.transport-type, .transport-dist', function() {
-            let row = $(this).closest('tr');
-            let type = row.find('.transport-type').val();
-            let dist = parseFloat(row.find('.transport-dist').val()) || 0;
+        $(document).on('change', '.transport-type', function() {
+            let val = $(this).val();
+            let $row = $(this).closest('tr');
             
-            if (type === 'car') row.find('.transport-amount').val((dist * 4).toFixed(2));
-            else if (type === 'motorcycle') row.find('.transport-amount').val((dist * 2).toFixed(2));
-            else if (type === 'gov_car') row.find('.transport-amount').val('0.00');
+            if (val === 'other') {
+                $row.find('.transport-other-desc').show();
+            } else {
+                $row.find('.transport-other-desc').hide();
+            }
+
+            if (val === 'car' || val === 'motorcycle' || val === 'gov_car') {
+                $row.find('.transport-plate').show();
+            } else {
+                $row.find('.transport-plate').hide().val('');
+            }
+
+            // ซ่อนช่องระยะทาง/จำนวน สำหรับ ทางด่วน และ อื่นๆ
+            if (val === 'expressway' || val === 'other') {
+                $row.find('.transport-dist').hide().val(0);
+            } else {
+                $row.find('.transport-dist').show();
+                $row.find('.transport-dist').attr('placeholder', (val === 'car' || val === 'motorcycle' || val === 'gov_car') ? 'กม.' : 'จำนวน');
+            }
+            
+            calculateAll();
+        });
+
+        $(document).on('input change', '.transport-type, .transport-dist, .transport-amount', function() {
+            let $row = $(this).closest('tr');
+            let type = $row.find('.transport-type').val();
+            let dist = parseFloat($row.find('.transport-dist').val()) || 0;
+            
+            if ($(this).hasClass('transport-type') || $(this).hasClass('transport-dist')) {
+                if (type === 'car') {
+                    $row.find('.transport-amount').val((dist * 4).toFixed(2));
+                } else if (type === 'motorcycle') {
+                    $row.find('.transport-amount').val((dist * 2).toFixed(2));
+                }
+            }
             
             calculateAll();
         });
