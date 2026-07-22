@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=1200">
-    <title>สำนักงานส่งเสริมและพัฒนาการเกษตรที่ 2 จังหวัดราชบุรี</title>
+    <title>สสก.2 ราชบุรี แบบ 8708</title>
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -39,7 +39,7 @@
     /* ================== PRINT STYLES ================== */
     @media print {
         @page { size: A4 portrait; margin: 12mm 15mm; } 
-        @page landscape_page { size: A4 landscape; margin: 10mm 12mm; } 
+        @page landscape { size: A4 landscape; margin: 10mm 12mm; } 
         
         body { background: white; margin: 0; padding: 0; color: black; font-family: 'Sarabun', serif; font-size: 11pt; line-height: 1.35; -webkit-print-color-adjust: exact; print-color-adjust: exact; min-width: auto !important; }
         
@@ -48,7 +48,7 @@
         
         .page-break { page-break-after: always; width: 100%; clear: both; }
         .page-break:last-child { page-break-after: auto; }
-        .page-landscape { page: landscape_page; }
+        .page-landscape { page: landscape; width: 100%; }
         
         .val { color: #0000cd; display: inline-block; padding: 0 4px; border-bottom: 1px dotted #000; text-align: center; font-weight: 500; line-height: 1.2; min-width: 30px; font-size: 11pt; }
         .val-left { color: #0000cd; display: inline-block; padding-left: 5px; border-bottom: 1px dotted #000; text-align: left; font-weight: 500; line-height: 1.2; min-width: 30px; font-size: 11pt; }
@@ -135,7 +135,7 @@
                                     <div class="col-12">
                                         <label class="form-label fw-bold">ตามคำสั่ง/บันทึก ที่ <span class="text-danger">*</span></label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" id="doc_order_no" placeholder="เลขที่คำสั่ง...">
+                                            <input type="text" class="form-control" id="doc_order_no" placeholder="เช่น กษ 1013/...">
                                             <span class="input-group-text">ลงวันที่</span>
                                             <input type="text" class="form-control date-picker" id="doc_order_date" placeholder="วว/ดด/ปปปป">
                                         </div>
@@ -172,7 +172,7 @@
                                     
                                     <div class="col-12">
                                         <label class="form-label fw-bold">หมายเหตุ <span class="text-muted fw-normal">(ถ้ามี)</span></label>
-                                        <input type="text" class="form-control" id="trip_remark" placeholder="ระบุหมายเหตุเพิ่มเติม (ถ้ามี)">
+                                        <input type="text" class="form-control" id="trip_remark" placeholder="ระบุหมายเหตุเพิ่มเติม">
                                     </div>
 
                                     <div class="col-3">
@@ -304,7 +304,6 @@
                                 <div>
                                     <div class="mb-3">
                                         <label class="form-label fw-bold">เลือกประเภทการเบิกค่าที่พัก <span class="text-danger">*</span></label>
-                                        <!-- นำ disabled ออกแล้ว -->
                                         <select class="form-select fw-bold" id="accom_type">
                                             <option value="none">ไม่เบิกค่าเช่าที่พัก / พักฟรี หรือ ไป-กลับ</option>
                                             <option value="flat" selected>แบบเหมาจ่าย (อัตรา 800 / 1,200 บาท)</option>
@@ -315,7 +314,6 @@
                                     <div class="row g-3 mb-3">
                                         <div class="col-6">
                                             <label class="form-label fw-bold">จำนวนคืนที่พัก (คืน)</label>
-                                            <!-- นำ disabled ออกแล้ว -->
                                             <input type="number" step="1" min="0" class="form-control text-center fw-bold" id="accom_nights" value="0">
                                         </div>
                                         <div class="col-6" id="actual_rate_container" style="display: none;">
@@ -324,7 +322,6 @@
                                         </div>
                                     </div>
                                     <div class="form-check mb-3 p-3 bg-light rounded border">
-                                        <!-- นำ disabled ออกแล้ว -->
                                         <input class="form-check-input ms-1" type="checkbox" id="is_special_area">
                                         <label class="form-check-label fw-bold ms-2 text-dark" for="is_special_area">เดินทางไปในท้องที่พิเศษ</label>
                                     </div>
@@ -361,7 +358,8 @@
                                         <thead>
                                             <tr class="text-center">
                                                 <th style="width: 35%;">ประเภทพาหนะ</th>
-                                                <th style="width: 25%;">ทะเบียน</th>
+                                                <th style="width: 25%;">เส้นทาง / วันที่</th>
+                                                <th style="width: 15%;">ทะเบียน</th>
                                                 <th style="width: 15%;">ระยะทาง (กม.) / จำนวน</th>
                                                 <th style="width: 15%;">จำนวนเงิน (บาท)</th>
                                                 <th style="width: 10%;" class="no-print">ลบ</th>
@@ -371,8 +369,15 @@
                                         </tbody>
                                         <tfoot>
                                             <tr class="table-light fw-bold">
-                                                <td colspan="3" class="text-end text-dark fs-6">รวมค่าพาหนะทั้งสิ้น:</td>
+                                                <td colspan="4" class="text-end text-dark fs-6">รวมค่าพาหนะทั้งสิ้น:</td>
                                                 <td class="text-end text-primary fs-5" id="total_transport_display">0.00</td>
+                                                <td class="no-print"></td>
+                                            </tr>
+                                            <tr class="table-warning fw-bold no-print">
+                                                <td colspan="4" class="text-end text-danger fs-6">* ขอเบิกเพียง:</td>
+                                                <td class="text-end pe-1">
+                                                    <input type="number" step="0.01" min="0" class="form-control form-control-sm text-end fw-bold text-danger" id="transport_request_only" placeholder="ระบุยอด (ถ้ามี)">
+                                                </td>
                                                 <td class="no-print"></td>
                                             </tr>
                                         </tfoot>
@@ -500,6 +505,7 @@
                 <div class="f-row">
                     รวมเวลาไปราชการครั้งนี้ <span class="val text-center" id="pr_t_d" style="width: 60px; margin: 0 10px;"></span> วัน 
                     <span class="val text-center" id="pr_t_h" style="width: 60px; margin: 0 10px;"></span> ชั่วโมง 
+                    <span class="val text-center" id="pr_t_m" style="width: 60px; margin: 0 10px;"></span> นาที
                 </div>
             </div>
 
@@ -548,6 +554,7 @@
             <div style="display: flex; justify-content: space-between; text-align: center; margin-top: 10px;">
                 <div style="width: 45%;">
                     <div style="margin-bottom: 15px;">ลงชื่อผู้ตรวจ</div>
+                    <br><br>
                     <div>( <span style="border-bottom: 1px dotted #000; display: inline-block; width: 200px;"></span> )</div>
                     <div style="margin-top: 10px; display: flex; flex-direction: column; align-items: center; gap: 5px;">
                         <div style="display: flex; width: 80%;"><span style="width: 60px; text-align: left;">ตำแหน่ง</span><span style="flex: 1;"></span></div>
@@ -556,6 +563,7 @@
                 </div>
                 <div style="width: 45%;">
                     <div style="margin-bottom: 15px;">ลงชื่อผู้ขอรับเงิน</div>
+                    <br><br>
                     <div>( <span style="border-bottom: 1px dotted #000; display: inline-block; width: 200px;"></span> )</div>
                     <div style="margin-top: 10px; display: flex; flex-direction: column; align-items: center; gap: 5px;">
                         <div style="display: flex; width: 80%;"><span style="width: 60px; text-align: left;">ตำแหน่ง</span><span style="flex: 1;"></span></div>
@@ -572,7 +580,7 @@
             <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
                 <div style="width: 45%; padding-left: 20px;">
                     <div style="margin-bottom: 25px; line-height: 1.5; white-space: nowrap;">ได้ตรวจสอบหลักฐานการเบิกจ่ายเงินที่แนบ<br>ถูกต้องแล้ว เห็นควรอนุมัติให้เบิกจ่ายได้</div>
-                    
+                    <br><br>
                     <div class="f-row" style="margin-bottom: 15px;">
                         <span>ลงชื่อ</span><span style="border-bottom:1px dotted #000; flex:1; margin:0 10px;"></span>
                     </div>
@@ -589,7 +597,7 @@
                 
                 <div style="width: 45%;">
                     <div class="text-center" style="margin-bottom: 45px;">อนุมัติให้จ่ายได้</div>
-                    
+                    <br><br>
                     <div class="f-row" style="margin-bottom: 15px;">
                         <span>ลงชื่อ</span><span style="border-bottom:1px dotted #000; flex:1; margin:0 10px;"></span>
                     </div>
@@ -615,6 +623,7 @@
             <div style="display: flex; justify-content: space-between; margin-bottom: 25px; text-align: center;">
                 <div style="width: 45%;">
                     <div class="f-row" style="margin-bottom: 10px;">
+                        <br><br><br>
                         <span>ลงชื่อ</span><span style="border-bottom:1px dotted #000; flex:1; margin:0 10px;"></span><span>ผู้รับเงิน</span>
                     </div>
                     <div class="f-row" style="margin-bottom: 10px;">
@@ -629,6 +638,7 @@
                 </div>
                 <div style="width: 45%;">
                     <div class="f-row" style="margin-bottom: 10px;">
+                        <br><br><br>
                         <span>ลงชื่อ</span><span style="border-bottom:1px dotted #000; flex:1; margin:0 10px;"></span><span>ผู้จ่ายเงิน</span>
                     </div>
                     <div class="f-row" style="margin-bottom: 10px;">
@@ -805,6 +815,9 @@
                 <div style="width: 350px;">
                     <div style="margin-bottom: 10px;">(ลงชื่อ)........................................................</div>
                     <div style="margin-bottom: 10px;">(........................................................)</div>
+                    <div class="f-row" style="justify-content: center; white-space: nowrap; margin-bottom: 10px;">
+                        ตำแหน่ง........................................................
+                    </div>
                     <div class="f-row" style="justify-content: center; white-space: nowrap;">
                         วันที่.............เดือน................................พ.ศ................
                     </div>
@@ -822,6 +835,9 @@
                     <div style="width: 350px;">
                         <div style="margin-bottom: 10px;">(ลงชื่อ)........................................................</div>
                         <div style="margin-bottom: 10px;">(........................................................)</div>
+                        <div class="f-row" style="justify-content: center; white-space: nowrap; margin-bottom: 10px;">
+                            ตำแหน่ง........................................................
+                        </div>
                         <div class="f-row" style="justify-content: center; white-space: nowrap;">
                             วันที่.............เดือน................................พ.ศ................
                         </div>
@@ -949,7 +965,8 @@
         let isCarMoto = (type === 'car' || type === 'motorcycle');
         let isGovCar = (type === 'gov_car');
         let isOther = (type === 'other');
-        let isNoDist = (type === 'expressway' || type === 'other');
+        let isPublicTransport = (type === 'bus' || type === 'train' || type === 'plane' || type === 'taxi' || type === 'moto_taxi');
+        let isNoDist = (type === 'expressway' || type === 'other' || isPublicTransport);
         
         let initialAmount = 0;
         if (type === 'car') {
@@ -960,8 +977,9 @@
 
         let distPlaceholder = (isCarMoto || isGovCar) ? 'กม.' : 'จำนวน';
         let amtPlaceholder = isCarMoto ? '0.00' : 'ระบุเงินที่จ่ายจริง';
-        let amtValue = (initialAmount > 0 || isCarMoto) ? initialAmount.toFixed(2) : (isGovCar ? '0.00' : '');
+        let amtValue = (initialAmount > 0 || isCarMoto) ? initialAmount.toFixed(2) : '';
         let distDisplay = isNoDist ? 'none' : 'block';
+        let defaultDate = $('#start_date_display').val() || '';
 
         let rowHtml = `
             <tr>
@@ -971,6 +989,13 @@
                     </select>
                     <input type="text" class="form-control form-control-sm transport-other-desc mt-1" placeholder="ระบุรายละเอียดค่าใช้จ่ายอื่น" style="display: ${isOther ? 'block' : 'none'};">
                 </td>
+                <td>
+                    <div class="public-transport-details" style="display: ${isPublicTransport ? 'block' : 'none'};">
+                        <input type="text" class="form-control form-control-sm transport-date mb-1 dynamic-date" placeholder="วัน/เดือน/ปี พ.ศ.">
+                        <input type="text" class="form-control form-control-sm transport-from mb-1" placeholder="จาก ...">
+                        <input type="text" class="form-control form-control-sm transport-to" placeholder="ถึง ...">
+                    </div>
+                </td>
                 <td><input type="text" class="form-control form-control-sm transport-plate" placeholder="เช่น กข 1234" style="display: ${(isCarMoto || isGovCar) ? 'block' : 'none'};"></td>
                 <td><input type="number" step="0.1" min="0" class="form-control form-control-sm text-center transport-dist" value="${dist}" placeholder="${distPlaceholder}" style="display: ${distDisplay};"></td>
                 <td><input type="number" step="0.01" min="0" class="form-control form-control-sm text-end transport-amount fw-bold text-primary" value="${amtValue}" placeholder="${amtPlaceholder}"></td>
@@ -979,6 +1004,13 @@
                 </td>
             </tr>`;
         $('#transportBody').append(rowHtml);
+        
+        $('#transportBody tr:last-child .dynamic-date').flatpickr({
+            dateFormat: "d/m/Y", 
+            locale: "th",
+            defaultDate: defaultDate
+        });
+        
         calculateAll();
     }
 
@@ -1044,7 +1076,7 @@
             
             let typeName = "";
             if (type === 'car') typeName = "รถยนต์ส่วนบุคคล";
-            else if (type === 'motorcycle') typeName = "รถจักรยานยนต์";
+            else if (type === 'motorcycle') typeName = "รถจักรยานยนต์ส่วนบุคคล";
             else if (type === 'gov_car') typeName = "รถยนต์ราชการ";
             else if (type === 'bus') typeName = "รถประจำทาง";
             else if (type === 'train') typeName = "รถไฟ";
@@ -1096,7 +1128,6 @@
             let rAlw = (t.level === 'senior') ? 270 : 240;
             let rAcc = (t.level === 'senior') ? 1200 : 800;
             
-            // เช็คความประสงค์ขอเบิกเบี้ยเลี้ยง
             if (perDiemClaim === 'no') {
                 t.alw = 0;
             } else {
@@ -1119,16 +1150,19 @@
             sumAcc += t.acc;
         });
         
+        let customTrpReq = parseFloat($('#transport_request_only').val());
+        let finalTrpSum = (!isNaN(customTrpReq) && customTrpReq > 0) ? customTrpReq : (transportTotal + otherTotal);
+
         $('#total_per_diem_display').html(`${sumAlw.toFixed(2)} <small class="fs-6 text-muted">บาท</small>`);
         $('#sum_per_diem_txt').text(sumAlw.toFixed(2));
         $('#total_accom_display').html(`${sumAcc.toFixed(2)} <small class="fs-6 text-muted">บาท</small>`);
         $('#sum_accom_txt').text(sumAcc.toFixed(2));
         
         $('#total_transport_display').text((transportTotal + otherTotal).toFixed(2));
-        $('#sum_transport_txt').text((transportTotal + otherTotal).toFixed(2));
+        $('#sum_transport_txt').text(finalTrpSum.toFixed(2));
 
-        let grandTotal = sumAlw + sumAcc + transportTotal + otherTotal;
-        $('#grand_total_display').html(`${grandTotal.toFixed(2)} <span class="fs-4 text-white">บาท</span>`);
+        let grandTotal = sumAlw + sumAcc + finalTrpSum;
+        $('#grand_total_display').html(`${grandTotal.toLocaleString('th-TH', {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span class="fs-4 text-white">บาท</span>`);
         $('#thai_baht_text_display').text(toThaiBahtText(grandTotal));
 
         globalCalcData = {
@@ -1166,7 +1200,7 @@
         let commanderText = $('#commander_type').val();
         
         if (passThrough) {
-            if (passThrough === "ผู้อำนวยการสำนักงานส่งเสริมและพัฒนาการเกษตรที่ ๒ จังหวัดราชบุรี" || passThrough === "ผู้อำนวยการสำนักงานส่งเสริมและพัฒนาการเกษตรที่ 2 จังหวัดราชบุรี") {
+            if (passThrough === "ผู้อำนวยการสำนักงานส่งเสริมและพัฒนาการเกษตรที่ 2 จังหวัดราชบุรี" || passThrough === "ผู้อำนวยการสำนักงานส่งเสริมและพัฒนาการเกษตรที่ 2 จังหวัดราชบุรี") {
                 commanderText += " ผ่าน " + passThrough;
             } else {
                 commanderText += " " + passThrough;
@@ -1208,9 +1242,11 @@
         $('#pr_alw_d').text(d.days); $('#pr_alw_tot').text(fmt(d.totals.alw));
         $('#pr_acc_d').text(d.nights); $('#pr_acc_tot').text(fmt(d.totals.acc));
         
-        // คืนค่าเส้นประให้บรรทัดค่าพาหนะ
+        let customTrpReq = parseFloat($('#transport_request_only').val());
+        let p1TransportAmount = (!isNaN(customTrpReq) && customTrpReq > 0) ? customTrpReq : d.totals.trp;
+
         $('#pr_trp_type').text(d.totals.trpType);
-        $('#pr_trp_tot').text(fmt(d.totals.trp));
+        $('#pr_trp_tot').text(fmt(p1TransportAmount));
         $('#pr_oth_desc').text(d.totals.othDesc || '');
         $('#pr_oth_tot').text(fmt(d.totals.oth));
         
@@ -1229,7 +1265,7 @@
             $('#pr3_province').text($('#traveler_province').val()); 
             $('#pr3_main').text(main.name);
             
-            // ดึงข้อมูลวันที่จากหน้าที่ 1 มาใส่หน้า 3 (ไม่มีการย่อเดือน)
+            // ดึงข้อมูลวันที่จากหน้าที่ 1 มาใส่หน้า 3
             $('#pr3_doc_d').text(docDay);
             $('#pr3_doc_m').text(docMonth);
             $('#pr3_doc_y').text(docYear);
@@ -1239,15 +1275,20 @@
             for(let index = 0; index < d.travelers.length; index++) {
                 let t = d.travelers[index];
                 let remark = t.alw > 0 ? `เบี้ยเลี้ยง ${t.level === 'senior' ? '270' : '240'} บ./วัน` : '';
+                
+                // ใช้ยอดที่ override ถ้ามี
+                let showTrpAmt = t.isMain ? p1TransportAmount : 0;
+                let showRowTotal = t.alw + t.acc + showTrpAmt + t.oth;
+
                 tbodyHtml += `<tr>
                     <td>${index + 1}</td>
                     <td class="text-start ps-2">${t.name}</td>
                     <td class="text-start ps-2">${t.pos}</td>
                     <td class="text-end pe-1">${fmt(t.alw)}</td>
                     <td class="text-end pe-1">${fmt(t.acc)}</td>
-                    <td class="text-end pe-1">${fmt(t.trp)}</td>
+                    <td class="text-end pe-1">${fmt(showTrpAmt)}</td>
                     <td class="text-end pe-1">${fmt(t.oth)}</td>
-                    <td class="text-end pe-1 fw-bold">${fmt(t.total)}</td>
+                    <td class="text-end pe-1 fw-bold">${fmt(showRowTotal)}</td>
                     <td></td><td></td><td class="text-center" style="font-size: 8pt;">${remark}</td>
                 </tr>`;
             }
@@ -1255,7 +1296,7 @@
             
             $('#pr3_s_alw').text(fmt(d.totals.alw));
             $('#pr3_s_acc').text(fmt(d.totals.acc));
-            $('#pr3_s_trp').text(fmt(d.totals.trp));
+            $('#pr3_s_trp').text(fmt(p1TransportAmount));
             $('#pr3_s_oth').text(fmt(d.totals.oth));
             $('#pr3_s_grd').text(fmt(d.totals.grand));
             $('#pr3_baht').text(toThaiBahtText(d.totals.grand));
@@ -1288,6 +1329,8 @@
         let tripFrom = $('#trip_from').val();
         let tripLoc = $('#trip_location').val();
 
+        let p4TableSum = 0; // ตัวแปรสำหรับยอดรวมในตารางหน้า 4
+
         $('#transportBody tr').each(function() {
             let type = $(this).find('.transport-type').val();
             let plate = $(this).find('.transport-plate').val() || ''; 
@@ -1296,23 +1339,50 @@
             let amt = parseFloat($(this).find('.transport-amount').val()) || 0;
             let desc = $(this).find('.transport-other-desc').val() || ''; 
 
-            if (type !== 'gov_car') { // ไม่แสดงในหน้า 4 ถ้ารถยนต์ราชการ
+            let isPublicTransport = (type === 'bus' || type === 'train' || type === 'plane' || type === 'taxi' || type === 'moto_taxi');
+            
+            let pubDateStr = '';
+            if (isPublicTransport) {
+                let pDate = $(this).find('.transport-date').val();
+                if (pDate) {
+                    let parts = pDate.split('/');
+                    if (parts.length === 3) {
+                        let d = parseInt(parts[0], 10);
+                        let m = monthNames[parseInt(parts[1], 10)];
+                        let y = parts[2];
+                        pubDateStr = `${d} ${m} ${y}`;
+                    }
+                }
+            }
+            
+            let displayDate = (isPublicTransport && pubDateStr) ? pubDateStr : p4Date;
+            let displayFrom = (isPublicTransport && $(this).find('.transport-from').val().trim() !== '') ? $(this).find('.transport-from').val().trim() : tripFrom;
+            let displayTo = (isPublicTransport && $(this).find('.transport-to').val().trim() !== '') ? $(this).find('.transport-to').val().trim() : tripLoc;
+
+            if (type !== 'gov_car') { 
                 let calc = amt; 
+                let isCarMoto = (type === 'car' || type === 'motorcycle');
+
                 if (type === 'car') calc = dist * 4;
                 if (type === 'motorcycle') calc = dist * 2;
 
-                if ((type === 'car' || type === 'motorcycle') && Math.abs(amt - calc) > 0.01) {
+                let displayAmt = amt;
+                if (isCarMoto) {
+                    displayAmt = calc; // โชว์ผลลัพธ์จากสูตรในตารางสำหรับรถส่วนตัว/มอเตอร์ไซค์
+                }
+
+                p4TableSum += displayAmt; // ยอดรวมที่จะแสดงท้ายตาราง
+                p4TotalRequest += amt;    // ยอดรวมเบิกจริง (ผลรวมจากที่ผู้ใช้กรอก)
+
+                if (isCarMoto && Math.abs(amt - calc) > 0.01) {
                     showRemark = true;
                 }
 
-                p4TotalCalc += calc;
-                p4TotalRequest += amt;
-
                 let typeName = "";
-                let prefix = (type === 'car' || type === 'motorcycle') ? "ค่าชดเชย" : "ค่า";
+                let prefix = isCarMoto ? "ค่าชดเชย" : "ค่า";
                 
                 if (type === 'car') typeName = "รถยนต์ส่วนบุคคล";
-                else if (type === 'motorcycle') typeName = "รถจักรยานยนต์";
+                else if (type === 'motorcycle') typeName = "รถจักรยานยนต์ส่วนบุคคล";
                 else if (type === 'bus') typeName = "รถประจำทาง";
                 else if (type === 'train') typeName = "รถไฟ";
                 else if (type === 'plane') typeName = "เครื่องบิน";
@@ -1326,25 +1396,26 @@
 
                 let detailText = '';
                 
-                if (type === 'car' || type === 'motorcycle') {
+                if (isCarMoto) {
                     let rate = (type === 'car') ? 4 : 2;
                     detailText += `${prefix} ${typeName} ทะเบียน ${plate !== '' ? plate : '-'}<br>`;
-                    detailText += `จาก ${tripFrom} ถึง ${tripLoc}<br>`;
+                    detailText += `จาก ${displayFrom} ถึง ${displayTo}<br>`;
                     detailText += `เดินทางไป-กลับ รวมระยะทาง ${dist} กม. กิโลเมตรละ ${rate} บาท`;
-                } else if (type === 'expressway' || type === 'other') {
-                    // ทางด่วน และ อื่นๆ ไม่มีระยะทาง
+                } else if (type === 'expressway' || type === 'other' || isPublicTransport) {
+                    // ทางด่วน, อื่นๆ, และพาหนะสาธารณะ ไม่แสดงระยะทาง
                     detailText += `${prefix} ${typeName}<br>`;
-                    detailText += `จาก ${tripFrom} ถึง ${tripLoc}`;
+                    detailText += `จาก ${displayFrom} ถึง ${displayTo}`;
                 } else {
+                    // กรณีอื่นๆ ที่เหลือ (ถ้ามี)
                     detailText += `${prefix} ${typeName}<br>`;
-                    detailText += `จาก ${tripFrom} ถึง ${tripLoc}<br>`;
+                    detailText += `จาก ${displayFrom} ถึง ${displayTo}<br>`;
                     detailText += `เดินทางไป-กลับ รวมระยะทาง ${dist} กม.`;
                 }
 
                 p4Html += `<tr>
-                    <td class="text-center align-top">${p4Date}</td>
+                    <td class="text-center align-top">${displayDate}</td>
                     <td class="text-start ps-2 align-top">${detailText}</td>
-                    <td class="text-end pe-1 align-top">${fmt(amt)}</td>
+                    <td class="text-end pe-1 align-top">${fmt(displayAmt)}</td>
                     <td class="text-center align-top"></td>
                 </tr>`;
             }
@@ -1354,11 +1425,19 @@
             $('#page4_container').removeClass('d-none').show();
             $('#pr4_tbody').html(p4Html);
             
-            // ใช้ยอดรวมที่ขอเบิกจริง (amt) แสดงผล
-            $('#pr4_grd_tot').text(fmt(p4TotalRequest));
-            $('#pr4_baht_txt').text(`(${toThaiBahtText(p4TotalRequest)})`);
+            // เช็คว่ามีการขอเบิกเพียงแบบเหมาภาพรวมหรือไม่
+            let customTrp = parseFloat($('#transport_request_only').val());
+            if (!isNaN(customTrp) && customTrp > 0) {
+                p4TotalRequest = customTrp; // เอาช่องเหมาไปเขียนทับเลย
+                showRemark = true;
+            }
 
-            if (showRemark) {
+            // แสดงยอดรวมของตาราง
+            $('#pr4_grd_tot').text(fmt(p4TableSum));
+            $('#pr4_baht_txt').text(`(${toThaiBahtText(p4TableSum)})`);
+
+            // ถ้ามียอดเบิกจริงไม่ตรงกับตาราง ให้แสดงหมายเหตุ "ขอเบิกเงินเพียง"
+            if (showRemark || p4TotalRequest !== p4TableSum) {
                 $('#pr4_remark_section').show();
                 $('#pr4_req_amt').text(fmt(p4TotalRequest));
                 $('#pr4_req_baht_txt').text(toThaiBahtText(p4TotalRequest));
@@ -1383,11 +1462,10 @@
         });
 
         let now = new Date();
-        let tmr = new Date(now); tmr.setDate(tmr.getDate() + 1);
-        let dd = String(tmr.getDate()).padStart(2, '0');
-        let mm = String(tmr.getMonth() + 1).padStart(2, '0'); 
-        let yyyy = tmr.getFullYear();
-        document.getElementById("end_date")._flatpickr.setDate(`${dd}/${mm}/${yyyy}`);
+        let dd = String(now.getDate()).padStart(2, '0');
+        let mm = String(now.getMonth() + 1).padStart(2, '0'); 
+        let yyyy = now.getFullYear();
+        document.getElementById("end_date")._flatpickr.setDate(`${dd}/${mm}/${yyyy}`); // ตั้งวันกลับเป็นวันเดียวกับวันไป
         
         $(document).on('change', '#accom_type', function() {
             let val = $(this).val();
@@ -1417,6 +1495,14 @@
             let val = $(this).val();
             let $row = $(this).closest('tr');
             
+            let isPublicTransport = (val === 'bus' || val === 'train' || val === 'plane' || val === 'taxi' || val === 'moto_taxi');
+
+            if (isPublicTransport) {
+                $row.find('.public-transport-details').show();
+            } else {
+                $row.find('.public-transport-details').hide();
+            }
+
             if (val === 'other') {
                 $row.find('.transport-other-desc').show();
             } else {
@@ -1429,8 +1515,8 @@
                 $row.find('.transport-plate').hide().val('');
             }
 
-            // ซ่อนช่องระยะทาง/จำนวน สำหรับ ทางด่วน และ อื่นๆ
-            if (val === 'expressway' || val === 'other') {
+            // ซ่อนช่องระยะทาง/จำนวน สำหรับ พาหนะสาธารณะ, ทางด่วน และ อื่นๆ
+            if (val === 'expressway' || val === 'other' || isPublicTransport) {
                 $row.find('.transport-dist').hide().val(0);
             } else {
                 $row.find('.transport-dist').show();
