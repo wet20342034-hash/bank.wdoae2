@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=1200">
-    <title>สสก.2 ราชบุรี แบบ 8708</title>
+    <title>สำนักงานส่งเสริมและพัฒนาการเกษตรที่ 2 จังหวัดราชบุรี</title>
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -357,12 +357,12 @@
                                     <table class="table table-bordered align-middle table-dynamic" id="transportTable">
                                         <thead>
                                             <tr class="text-center">
-                                                <th style="width: 35%;">ประเภทพาหนะ</th>
+                                                <th style="width: 25%;">ประเภทพาหนะ</th>
                                                 <th style="width: 25%;">เส้นทาง / วันที่</th>
-                                                <th style="width: 15%;">ทะเบียน</th>
-                                                <th style="width: 15%;">ระยะทาง (กม.) / จำนวน</th>
-                                                <th style="width: 15%;">จำนวนเงิน (บาท)</th>
-                                                <th style="width: 10%;" class="no-print">ลบ</th>
+                                                <th style="width: 10%;">ทะเบียน</th>
+                                                <th style="width: 10%;">ระยะทาง (กม.) / จำนวน</th>
+                                                <th style="width: 22%;">จำนวนเงิน (บาท)</th>
+                                                <th style="width: 8%;" class="no-print">ลบ</th>
                                             </tr>
                                         </thead>
                                         <tbody id="transportBody">
@@ -404,7 +404,7 @@
                                 
                                 <div class="col-md-5 print-btn-container px-4">
                                     <button type="button" class="btn-print-huge w-100" id="btn_print_pdf">
-                                        <i class="fas fa-print fa-2x mb-2 d-block"></i> สั่งพิมพ์เอกสาร
+                                        <i class="fas fa-print fa-2x mb-2 d-block"></i> สั่งพิมพ์แบบ 8708
                                     </button>
                                 </div>
                             </div>
@@ -557,8 +557,8 @@
                     <br><br>
                     <div>( <span style="border-bottom: 1px dotted #000; display: inline-block; width: 200px;"></span> )</div>
                     <div style="margin-top: 10px; display: flex; flex-direction: column; align-items: center; gap: 5px;">
-                        <div style="display: flex; width: 80%;"><span style="width: 60px; text-align: left;">ตำแหน่ง</span><span style="flex: 1;"></span></div>
-                        <div style="display: flex; width: 80%;"><span style="width: 60px; text-align: left;">วันที่</span><span style="flex: 1;"></span></div>
+                        <div style="display: flex; width: 80%;"><span style="width: 60px; text-align: left;">ตำแหน่ง</span><span style="flex: 1; border-bottom: 1px dotted #000;"></span></div>
+                        <div style="display: flex; width: 80%;"><span style="width: 60px; text-align: left;">วันที่</span><span style="flex: 1; border-bottom: 1px dotted #000;"></span></div>
                     </div>
                 </div>
                 <div style="width: 45%;">
@@ -566,8 +566,8 @@
                     <br><br>
                     <div>( <span style="border-bottom: 1px dotted #000; display: inline-block; width: 200px;"></span> )</div>
                     <div style="margin-top: 10px; display: flex; flex-direction: column; align-items: center; gap: 5px;">
-                        <div style="display: flex; width: 80%;"><span style="width: 60px; text-align: left;">ตำแหน่ง</span><span style="flex: 1;"></span></div>
-                        <div style="display: flex; width: 80%;"><span style="width: 60px; text-align: left;">วันที่</span><span style="flex: 1;"></span></div>
+                        <div style="display: flex; width: 80%;"><span style="width: 60px; text-align: left;">ตำแหน่ง</span><span style="flex: 1; border-bottom: 1px dotted #000;"></span></div>
+                        <div style="display: flex; width: 80%;"><span style="width: 60px; text-align: left;">วันที่</span><span style="flex: 1; border-bottom: 1px dotted #000;"></span></div>
                     </div>
                 </div>
             </div>
@@ -951,7 +951,7 @@
     function addTransportRow(type, dist) {
         let typeOptions = `
             <option value="car" ${type === 'car' ? 'selected' : ''}>🚗 รถยนต์ส่วนบุคคล (4 บ./กม.)</option>
-            <option value="motorcycle" ${type === 'motorcycle' ? 'selected' : ''}>🏍️ รถจักรยานยนต์ (2 บ./กม.)</option>
+            <option value="motorcycle" ${type === 'motorcycle' ? 'selected' : ''}>🏍️ รถจักรยานยนต์ส่วนบุคคล (2 บ./กม.)</option>
             <option value="gov_car" ${type === 'gov_car' ? 'selected' : ''}>🚙 รถยนต์ราชการ</option>
             <option value="bus" ${type === 'bus' ? 'selected' : ''}>🚌 รถประจำทาง (ค่าเดินทางจ่ายจริง)</option>
             <option value="train" ${type === 'train' ? 'selected' : ''}>🚆 รถไฟ (ค่าเดินทางจ่ายจริง)</option>
@@ -966,7 +966,7 @@
         let isGovCar = (type === 'gov_car');
         let isOther = (type === 'other');
         let isPublicTransport = (type === 'bus' || type === 'train' || type === 'plane' || type === 'taxi' || type === 'moto_taxi');
-        let isNoDist = (type === 'expressway' || type === 'other' || isPublicTransport);
+        let showRouteDate = isPublicTransport || type === 'expressway' || isOther; // เพิ่ม expressway และ other ให้มีกล่องวันที่เหมือน public transport
         
         let initialAmount = 0;
         if (type === 'car') {
@@ -978,8 +978,8 @@
         let distPlaceholder = (isCarMoto || isGovCar) ? 'กม.' : 'จำนวน';
         let amtPlaceholder = isCarMoto ? '0.00' : 'ระบุเงินที่จ่ายจริง';
         let amtValue = (initialAmount > 0 || isCarMoto) ? initialAmount.toFixed(2) : '';
-        let distDisplay = isNoDist ? 'none' : 'block';
         let defaultDate = $('#start_date_display').val() || '';
+        let distReadonly = (isCarMoto || isGovCar) ? '' : 'readonly style="background-color: #e9ecef;"'; // แก้ไขให้กรอกไม่ได้เฉพาะพาหนะอื่นๆ
 
         let rowHtml = `
             <tr>
@@ -990,14 +990,16 @@
                     <input type="text" class="form-control form-control-sm transport-other-desc mt-1" placeholder="ระบุรายละเอียดค่าใช้จ่ายอื่น" style="display: ${isOther ? 'block' : 'none'};">
                 </td>
                 <td>
-                    <div class="public-transport-details" style="display: ${isPublicTransport ? 'block' : 'none'};">
+                    <div class="public-transport-details" style="display: ${showRouteDate ? 'block' : 'none'};">
                         <input type="text" class="form-control form-control-sm transport-date mb-1 dynamic-date" placeholder="วัน/เดือน/ปี พ.ศ.">
-                        <input type="text" class="form-control form-control-sm transport-from mb-1" placeholder="จาก ...">
-                        <input type="text" class="form-control form-control-sm transport-to" placeholder="ถึง ...">
+                        <div class="transport-route-container" style="display: ${isPublicTransport ? 'block' : 'none'};">
+                            <input type="text" class="form-control form-control-sm transport-from mb-1" placeholder="จาก ...">
+                            <input type="text" class="form-control form-control-sm transport-to" placeholder="ถึง ...">
+                        </div>
                     </div>
                 </td>
                 <td><input type="text" class="form-control form-control-sm transport-plate" placeholder="เช่น กข 1234" style="display: ${(isCarMoto || isGovCar) ? 'block' : 'none'};"></td>
-                <td><input type="number" step="0.1" min="0" class="form-control form-control-sm text-center transport-dist" value="${dist}" placeholder="${distPlaceholder}" style="display: ${distDisplay};"></td>
+                <td><input type="number" step="0.1" min="0" class="form-control form-control-sm text-center transport-dist" value="${(isCarMoto || isGovCar) ? dist : ''}" placeholder="${(isCarMoto || isGovCar) ? distPlaceholder : '-'}" ${distReadonly}></td>
                 <td><input type="number" step="0.01" min="0" class="form-control form-control-sm text-end transport-amount fw-bold text-primary" value="${amtValue}" placeholder="${amtPlaceholder}"></td>
                 <td class="text-center no-print">
                     <button type="button" class="btn btn-outline-danger btn-sm btn-remove-transport"><i class="fas fa-trash-alt"></i></button>
@@ -1200,7 +1202,7 @@
         let commanderText = $('#commander_type').val();
         
         if (passThrough) {
-            if (passThrough === "ผู้อำนวยการสำนักงานส่งเสริมและพัฒนาการเกษตรที่ 2 จังหวัดราชบุรี" || passThrough === "ผู้อำนวยการสำนักงานส่งเสริมและพัฒนาการเกษตรที่ 2 จังหวัดราชบุรี") {
+            if (passThrough === "ผู้อำนวยการสำนักงานส่งเสริมและพัฒนาการเกษตรที่ ๒ จังหวัดราชบุรี" || passThrough === "ผู้อำนวยการสำนักงานส่งเสริมและพัฒนาการเกษตรที่ 2 จังหวัดราชบุรี") {
                 commanderText += " ผ่าน " + passThrough;
             } else {
                 commanderText += " " + passThrough;
@@ -1316,14 +1318,16 @@
         let showRemark = false;
         
         let p4Date = '';
-        if(sDate.d) {
-            p4Date = `${sDate.d} ${sDate.m} ${sDate.y}`; 
-            if ($('#trip_type').val() === 'overnight' && eDate.d) {
-                let eDateStr = `${eDate.d} ${eDate.m} ${eDate.y}`;
-                if(p4Date !== eDateStr) {
-                    p4Date += ` -<br>${eDateStr}`;
-                }
+        if(sDate.d && eDate.d) {
+            let sDateStr = `${sDate.d} ${sDate.m} ${sDate.y}`;
+            let eDateStr = `${eDate.d} ${eDate.m} ${eDate.y}`;
+            if(sDateStr !== eDateStr) {
+                p4Date = `${sDateStr} -<br>${eDateStr}`;
+            } else {
+                p4Date = sDateStr;
             }
+        } else if(sDate.d) {
+            p4Date = `${sDate.d} ${sDate.m} ${sDate.y}`;
         }
 
         let tripFrom = $('#trip_from').val();
@@ -1339,10 +1343,12 @@
             let amt = parseFloat($(this).find('.transport-amount').val()) || 0;
             let desc = $(this).find('.transport-other-desc').val() || ''; 
 
+            let isCarMotoGov = (type === 'car' || type === 'motorcycle' || type === 'gov_car');
             let isPublicTransport = (type === 'bus' || type === 'train' || type === 'plane' || type === 'taxi' || type === 'moto_taxi');
+            let showRouteDate = isPublicTransport || type === 'expressway' || type === 'other';
             
             let pubDateStr = '';
-            if (isPublicTransport) {
+            if (showRouteDate) {
                 let pDate = $(this).find('.transport-date').val();
                 if (pDate) {
                     let parts = pDate.split('/');
@@ -1355,9 +1361,9 @@
                 }
             }
             
-            let displayDate = (isPublicTransport && pubDateStr) ? pubDateStr : p4Date;
-            let displayFrom = (isPublicTransport && $(this).find('.transport-from').val().trim() !== '') ? $(this).find('.transport-from').val().trim() : tripFrom;
-            let displayTo = (isPublicTransport && $(this).find('.transport-to').val().trim() !== '') ? $(this).find('.transport-to').val().trim() : tripLoc;
+            let displayDate = (showRouteDate && pubDateStr) ? pubDateStr : p4Date;
+            let displayFrom = (showRouteDate && $(this).find('.transport-from').val().trim() !== '') ? $(this).find('.transport-from').val().trim() : tripFrom;
+            let displayTo = (showRouteDate && $(this).find('.transport-to').val().trim() !== '') ? $(this).find('.transport-to').val().trim() : tripLoc;
 
             if (type !== 'gov_car') { 
                 let calc = amt; 
@@ -1379,7 +1385,7 @@
                 }
 
                 let typeName = "";
-                let prefix = isCarMoto ? "ค่าชดเชย" : "ค่า";
+                let prefix = isCarMoto ? "ค่าชดเชยน้ำมันเชื้อเพลิง" : "ค่า";
                 
                 if (type === 'car') typeName = "รถยนต์ส่วนบุคคล";
                 else if (type === 'motorcycle') typeName = "รถจักรยานยนต์ส่วนบุคคล";
@@ -1401,15 +1407,14 @@
                     detailText += `${prefix} ${typeName} ทะเบียน ${plate !== '' ? plate : '-'}<br>`;
                     detailText += `จาก ${displayFrom} ถึง ${displayTo}<br>`;
                     detailText += `เดินทางไป-กลับ รวมระยะทาง ${dist} กม. กิโลเมตรละ ${rate} บาท`;
-                } else if (type === 'expressway' || type === 'other' || isPublicTransport) {
-                    // ทางด่วน, อื่นๆ, และพาหนะสาธารณะ ไม่แสดงระยะทาง
+                } else if (type === 'expressway' || type === 'other') {
+                    // ทางด่วนและอื่นๆ ไม่แสดงระยะทาง
                     detailText += `${prefix} ${typeName}<br>`;
                     detailText += `จาก ${displayFrom} ถึง ${displayTo}`;
                 } else {
-                    // กรณีอื่นๆ ที่เหลือ (ถ้ามี)
+                    // รถสาธารณะ ไม่แสดงระยะทาง
                     detailText += `${prefix} ${typeName}<br>`;
-                    detailText += `จาก ${displayFrom} ถึง ${displayTo}<br>`;
-                    detailText += `เดินทางไป-กลับ รวมระยะทาง ${dist} กม.`;
+                    detailText += `จาก ${displayFrom} ถึง ${displayTo}`;
                 }
 
                 p4Html += `<tr>
@@ -1432,7 +1437,7 @@
                 showRemark = true;
             }
 
-            // แสดงยอดรวมของตาราง
+            // แสดงยอดรวมของตาราง (ผลลัพธ์จากสูตร)
             $('#pr4_grd_tot').text(fmt(p4TableSum));
             $('#pr4_baht_txt').text(`(${toThaiBahtText(p4TableSum)})`);
 
@@ -1495,12 +1500,21 @@
             let val = $(this).val();
             let $row = $(this).closest('tr');
             
+            let isCarMoto = (val === 'car' || val === 'motorcycle');
+            let isGovCar = (val === 'gov_car');
             let isPublicTransport = (val === 'bus' || val === 'train' || val === 'plane' || val === 'taxi' || val === 'moto_taxi');
+            let showRouteDate = isPublicTransport || val === 'expressway' || val === 'other';
 
-            if (isPublicTransport) {
+            if (showRouteDate) {
                 $row.find('.public-transport-details').show();
             } else {
                 $row.find('.public-transport-details').hide();
+            }
+
+            if (isPublicTransport) {
+                $row.find('.transport-route-container').show();
+            } else {
+                $row.find('.transport-route-container').hide();
             }
 
             if (val === 'other') {
@@ -1509,24 +1523,25 @@
                 $row.find('.transport-other-desc').hide();
             }
 
-            if (val === 'car' || val === 'motorcycle' || val === 'gov_car') {
+            if (isCarMoto || isGovCar) {
                 $row.find('.transport-plate').show();
             } else {
                 $row.find('.transport-plate').hide().val('');
             }
 
-            // ซ่อนช่องระยะทาง/จำนวน สำหรับ พาหนะสาธารณะ, ทางด่วน และ อื่นๆ
-            if (val === 'expressway' || val === 'other' || isPublicTransport) {
-                $row.find('.transport-dist').hide().val(0);
+            // เปิด/ปิดการกรอกช่องระยะทาง
+            if (isCarMoto || isGovCar) {
+                $row.find('.transport-dist').prop('readonly', false).css('background-color', '');
+                $row.find('.transport-dist').attr('placeholder', 'กม.');
             } else {
-                $row.find('.transport-dist').show();
-                $row.find('.transport-dist').attr('placeholder', (val === 'car' || val === 'motorcycle' || val === 'gov_car') ? 'กม.' : 'จำนวน');
+                $row.find('.transport-dist').prop('readonly', true).val('').css('background-color', '#e9ecef');
+                $row.find('.transport-dist').attr('placeholder', '-');
             }
             
             calculateAll();
         });
 
-        $(document).on('input change', '.transport-type, .transport-dist, .transport-amount', function() {
+        $(document).on('input change', '.transport-type, .transport-dist, .transport-amount, #transport_request_only', function() {
             let $row = $(this).closest('tr');
             let type = $row.find('.transport-type').val();
             let dist = parseFloat($row.find('.transport-dist').val()) || 0;
