@@ -280,13 +280,9 @@
                                         <input type="number" step="0.5" min="0" class="form-control" id="custom_per_diem_days" placeholder="ปล่อยว่างเพื่อใช้อัตโนมัติ">
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label fw-bold text-danger">กรณีมีจัดเลี้ยงอาหาร / หักเบี้ยเลี้ยง</label>
-                                        <select class="form-select" id="deduct_meals">
-                                            <option value="0" selected>ไม่หัก (ไม่มีจัดเลี้ยงอาหาร)</option>
-                                            <option value="1">หัก 1 มื้อ (ลด 1/3 ของอัตราวันละ 1 วัน)</option>
-                                            <option value="2">หัก 2 มื้อ (ลด 2/3 ของอัตราวันละ 1 วัน)</option>
-                                            <option value="3">หัก 3 มื้อ (ลดเบี้ยเลี้ยงเต็ม 1 วัน)</option>
-                                        </select>
+                                        <label class="form-label fw-bold text-danger">กรณีมีจัดเลี้ยงอาหาร / ให้ระบุ จำนวนมื้ออาหาร</label>
+                                        <input type="number" step="1" min="0" class="form-control" id="deduct_meals" placeholder="ปล่อยว่างเพื่อไม่หักมื้ออาหาร">
+                                        
                                     </div>
                                 </div>
                                 <div class="p-3 bg-light rounded-3 border mt-3 d-flex justify-content-between align-items-center">
