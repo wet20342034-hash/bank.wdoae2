@@ -972,7 +972,7 @@
         let isGovCar = (type === 'gov_car');
         let isOther = (type === 'other');
         let isPublicTransport = (type === 'bus' || type === 'train' || type === 'plane' || type === 'taxi' || type === 'moto_taxi');
-        let showRouteDate = isPublicTransport || type === 'expressway' || isOther;
+        let showRouteDate = true; 
         
         let initialAmount = 0;
         if (type === 'car') {
@@ -998,7 +998,7 @@
                 <td>
                     <div class="public-transport-details" style="display: ${showRouteDate ? 'block' : 'none'};">
                         <input type="text" class="form-control form-control-sm transport-date mb-1 dynamic-date" placeholder="วัน/เดือน/ปี พ.ศ.">
-                        <div class="transport-route-container" style="display: ${isPublicTransport ? 'block' : 'none'};">
+                        <div class="transport-route-container" style="display: block;">
                             <input type="text" class="form-control form-control-sm transport-from mb-1" placeholder="จาก ...">
                             <input type="text" class="form-control form-control-sm transport-to" placeholder="ถึง ...">
                         </div>
@@ -1377,17 +1377,15 @@
             let isPublicTransport = (type === 'bus' || type === 'train' || type === 'plane' || type === 'taxi' || type === 'moto_taxi');
             
             let pubDateStr = '';
-            // ดึงวันที่จากตารางย่อย
-            if (isPublicTransport || type === 'expressway' || isOther) {
-                let pDate = $(this).find('.transport-date').val();
-                if (pDate) {
-                    let parts = pDate.split('/');
-                    if (parts.length === 3) {
-                        let d = parseInt(parts[0], 10);
-                        let m = monthNames[parseInt(parts[1], 10)];
-                        let y = parts[2];
-                        pubDateStr = `${d} ${m} ${y}`;
-                    }
+            // ดึงวันที่จากตารางย่อย (ทุกประเภทยานพาหนะ)
+            let pDate = $(this).find('.transport-date').val();
+            if (pDate && pDate.trim() !== '') {
+                let parts = pDate.split('/');
+                if (parts.length === 3) {
+                    let d = parseInt(parts[0], 10);
+                    let m = monthNames[parseInt(parts[1], 10)];
+                    let y = parts[2];
+                    pubDateStr = `${d} ${m} ${y}`;
                 }
             }
             
@@ -1396,8 +1394,12 @@
                 displayDate = pubDateStr; 
             }
             
-            let displayFrom = (isPublicTransport && $(this).find('.transport-from').val().trim() !== '') ? $(this).find('.transport-from').val().trim() : tripFrom;
-            let displayTo = (isPublicTransport && $(this).find('.transport-to').val().trim() !== '') ? $(this).find('.transport-to').val().trim() : tripLoc;
+            // ดึงข้อมูล จาก - ถึง ถ้ามีการระบุให้ใช้ข้อมูลนั้น ถ้าไม่ระบุให้ดึงข้อมูลจากข้อ 1 มาแสดงแทน
+            let inputFrom = $(this).find('.transport-from').val() || '';
+            let inputTo = $(this).find('.transport-to').val() || '';
+            
+            let displayFrom = (inputFrom.trim() !== '') ? inputFrom.trim() : tripFrom;
+            let displayTo = (inputTo.trim() !== '') ? inputTo.trim() : tripLoc;
 
             if (!isGovCar) { 
                 let calc = amt; 
@@ -1575,19 +1577,10 @@
             let isCarMoto = (val === 'car' || val === 'motorcycle');
             let isGovCar = (val === 'gov_car');
             let isPublicTransport = (val === 'bus' || val === 'train' || val === 'plane' || val === 'taxi' || val === 'moto_taxi');
-            let showRouteDate = isPublicTransport || val === 'expressway' || val === 'other';
-
-            if (showRouteDate) {
-                $row.find('.public-transport-details').show();
-            } else {
-                $row.find('.public-transport-details').hide();
-            }
-
-            if (isPublicTransport) {
-                $row.find('.transport-route-container').show();
-            } else {
-                $row.find('.transport-route-container').hide();
-            }
+            
+            // แสดงช่อง วันที่, จาก, ถึง เสมอทุกประเภท
+            $row.find('.public-transport-details').show();
+            $row.find('.transport-route-container').show();
 
             if (val === 'other') {
                 $row.find('.transport-other-desc').show();
