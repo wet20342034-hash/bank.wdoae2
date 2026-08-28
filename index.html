@@ -1039,7 +1039,7 @@
             let diffMs = end - start;
             diffHrs = diffMs / (1000 * 60 * 60); 
 
-            if (diffHrs > 0) {
+            if (diffMs > 0) {
                 let totalMins = Math.floor(diffMs / (1000 * 60));
                 finalDays = Math.floor(totalMins / (24 * 60));
                 let remMinsTotal = totalMins % (24 * 60);
@@ -1049,10 +1049,13 @@
                 $('#duration_display').text(`${finalDays} วัน ${finalHours} ชั่วโมง ${finalMins} นาที`);
                 
                 let tripType = $('#trip_type').val();
+                let remHrs = finalHours + (finalMins / 60);
+                
                 if (tripType === 'overnight') {
-                    calcDays = finalDays + ((diffHrs % 24) > 12 ? 1 : 0);
+                    // หากเศษเวลาเกิน 12 ชั่วโมงให้นับ 1 วัน, ถ้าเกิน 6 ชั่วโมงแต่ไม่เกิน 12 ให้ 0.5 วัน (แก้ไขตามที่ระบุเพื่อให้ได้ 1.5 วัน)
+                    calcDays = finalDays + (remHrs > 12 ? 1 : (remHrs > 6 ? 0.5 : 0));
                 } else {
-                    calcDays = diffHrs > 12 ? 1 : (diffHrs > 6 ? 0.5 : 0);
+                    calcDays = finalDays + (remHrs > 12 ? 1 : (remHrs > 6 ? 0.5 : 0));
                 }
                 
                 let customDays = $('#custom_per_diem_days').val();
