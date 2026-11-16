@@ -420,7 +420,7 @@
                         <div class="stats-bar">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h6 class="fw-bold text-secondary mb-0"><i class="fas fa-chart-bar me-2 text-success"></i>สถิติการเข้าชมและใช้งานระบบ</h6>
-                                <span class="badge bg-light text-muted border fw-normal">บันทึกอัตโนมัติในเครื่อง (Local Storage)</span>
+                                <span class="badge bg-light text-muted border fw-normal">เก็บสถิติออนไลน์</span>
                             </div>
                             <div class="row g-3">
                                 <div class="col-4">
@@ -1686,54 +1686,51 @@
     });
     </script>
 
-    <!-- ================== [เพิ่มใหม่] สคริปต์ระบบเก็บสถิติผู้เข้าชมและใช้งาน ================== -->
+    <!-- ================== [อัปเดต] สคริปต์ระบบเก็บสถิติออนไลน์ผ่าน Google Sheets ================== -->
     <script>
     (function() {
-        const StatsManager = {
-            init: function() {
-                let visitors = parseInt(localStorage.getItem('ssk2_stat_visitors') || '0') + 1;
-                localStorage.setItem('ssk2_stat_visitors', visitors);
-                this.updateDisplay();
-            },
-            incrementCalc: function() {
-                let calcs = parseInt(localStorage.getItem('ssk2_stat_calcs') || '0') + 1;
-                localStorage.setItem('ssk2_stat_calcs', calcs);
-                this.updateDisplay();
-            },
-            incrementPrint: function() {
-                let prints = parseInt(localStorage.getItem('ssk2_stat_prints') || '0') + 1;
-                localStorage.setItem('ssk2_stat_prints', prints);
-                this.updateDisplay();
-            },
-            updateDisplay: function() {
-                let visitors = parseInt(localStorage.getItem('ssk2_stat_visitors') || '1');
-                let calcs = parseInt(localStorage.getItem('ssk2_stat_calcs') || '0');
-                let prints = parseInt(localStorage.getItem('ssk2_stat_prints') || '0');
-                
-                $('#stat_visitors').text(visitors.toLocaleString());
-                $('#stat_calculations').text(calcs.toLocaleString());
-                $('#stat_prints').text(prints.toLocaleString());
+        // นำ Web app URL ที่ได้จากการ Deploy ใน Google Apps Script มาวางแทนที่ข้อความด้านล่างนี้
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxm-6lOf1QogvOCIBP4ETSyQJf3WHQxBpxlExsdddUwIe5RdzPg2MrUFBe28spQl_8P/exec";
+
+        const OnlineStatsManager = {
+            sendAction: function(actionName) {
+                if (!SCRIPT_URL || SCRIPT_URL.includes("วาง_URL")) return;
+
+                // ใช้ fetch ส่งคำสั่งแบบ GET เพื่อหลีกเลี่ยงปัญหา CORS ของเบราว์เซอร์
+                fetch(`${SCRIPT_URL}?action=${actionName}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data) {
+                            $('#stat_visitors').text(Number(data.visitors).toLocaleString());
+                            $('#stat_calculations').text(Number(data.calculations).toLocaleString());
+                            $('#stat_prints').text(Number(data.prints).toLocaleString());
+                        }
+                    })
+                    .catch(err => console.error("Stats Sync Error:", err));
             }
         };
 
         $(document).ready(function() {
-            StatsManager.init();
+            // 1. นับยอดผู้เข้าชมทันทีที่เปิดหน้าเว็บ
+            OnlineStatsManager.sendAction('visit');
 
-            // นับสถิติเมื่อมีการพิมพ์/แก้ไขข้อมูลในฟอร์ม (นับเมื่อหยุดพิมพ์ 1 วินาที)
+            // 2. นับสถิติเมื่อมีการแก้ไขข้อมูลในฟอร์ม (หน่วงเวลา 2 วินาทีหลังหยุดพิมพ์เพื่อไม่ให้ยิงถี่เกินไป)
             let calcTimer;
             $(document).on('input change', '#travelCalcForm input, #travelCalcForm select', function() {
                 clearTimeout(calcTimer);
                 calcTimer = setTimeout(function() {
-                    StatsManager.incrementCalc();
-                }, 1000);
+                    OnlineStatsManager.sendAction('calc');
+                }, 2000);
             });
 
-            // นับสถิติเมื่อกดปุ่มสั่งพิมพ์เอกสาร
+            // 3. นับสถิติเมื่อกดปุ่มสั่งพิมพ์เอกสาร
             $(document).on('click', '#btn_print_pdf', function() {
-                StatsManager.incrementPrint();
+                OnlineStatsManager.sendAction('print');
             });
         });
     })();
+    
+    </script>
     </script>
 </body>
 </html>
